@@ -1,0 +1,11 @@
+pageView
+productView
+adShow
+adClick
+fetchCoupon
+submitOrder
+addCart
+search
+collect
+thumbup
+share
