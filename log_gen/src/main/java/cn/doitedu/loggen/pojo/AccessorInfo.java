@@ -23,8 +23,11 @@ public class AccessorInfo {
     public static AccessorInfo get() throws Exception {
         AccessorInfo accessorInfo = new AccessorInfo();
 
+        // 70% 概率模拟登陆状态
         if(RandomUtils.nextInt(0,11)>3){
             accessorInfo.account = EventUtil.genAccount();
+        }else{
+            accessorInfo.account = "";
         }
 
         accessorInfo.deviceId = RandomStringUtils.random(12,true,true);

@@ -21,10 +21,9 @@ public class GenAppLog {
         BlockingQueue<AppChannelLog> accessors = new ArrayBlockingQueue<AppChannelLog>(100);
 
         // 启动添加访客的线程
-        for(int i=0;i<20;i++) {
-            new Thread(new AddAccessorTask(accessors)).start();
-            new Thread(new AccessorOperTask(accessors)).start();
-            new Thread(new AccessorOperTask(accessors)).start();
+        new Thread(new AddAccessorTask(accessors)).start();
+        // 启动访客操作线程
+        for(int i=0;i<100;i++) {
             new Thread(new AccessorOperTask(accessors)).start();
         }
     }

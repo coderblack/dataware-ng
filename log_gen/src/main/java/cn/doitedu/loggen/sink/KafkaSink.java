@@ -6,10 +6,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.IOException;
 import java.util.Properties;
 
-public class KafkaSink {
-    static KafkaProducer<String, String> producer = null;
-    static Properties props = null;
-    static {
+public class KafkaSink implements Sinker{
+    KafkaProducer<String, String> producer = null;
+    Properties props = null;
+    public KafkaSink(){
         try {
             props = new Properties();
             props.load(KafkaSink.class.getClassLoader().getResourceAsStream("kafka.properties"));
@@ -19,7 +19,7 @@ public class KafkaSink {
         }
     }
 
-    public static void sink(String content) throws IOException {
+    public void sink(String content) throws IOException {
         ProducerRecord<String, String> rec = new ProducerRecord<>(props.getProperty("dest.topic"), content);
         producer.send(rec);
         //producer.close();

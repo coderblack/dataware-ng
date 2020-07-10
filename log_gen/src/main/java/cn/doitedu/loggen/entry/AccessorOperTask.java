@@ -4,20 +4,30 @@ import cn.doitedu.loggen.logbean.AppChannelLog;
 import cn.doitedu.loggen.pojo.*;
 import cn.doitedu.loggen.sink.KafkaSink;
 import cn.doitedu.loggen.sink.LogSink;
+import cn.doitedu.loggen.sink.Sinker;
+import cn.doitedu.loggen.utils.ConfHolder;
 import cn.doitedu.loggen.utils.EventUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
 public class AccessorOperTask implements Runnable {
     BlockingQueue<AppChannelLog> accessors;
-    Logger log = Logger.getLogger("roll");
+    Sinker sinker;
 
-    public AccessorOperTask(BlockingQueue<AppChannelLog> accessors) {
+    public AccessorOperTask(BlockingQueue<AppChannelLog> accessors) throws IOException {
         this.accessors = accessors;
+        String sinkType = ConfHolder.getProperty("sink.type");
+        if("logger".equals(sinkType)){
+            sinker = new LogSink();
+        }
+        if("kafka".equals(sinkType)){
+            sinker = new KafkaSink();
+        }
     }
 
 
@@ -71,9 +81,7 @@ public class AccessorOperTask implements Runnable {
                     // 输出为日志
                     //LogSink.log(log,logContent);
                     // 输出到kafka
-                    KafkaSink.sink(logContent);
-
-
+                    sinker.sink(logContent);
                     Thread.sleep(RandomUtils.nextLong(1000, 10000));
                 }
             } catch (Exception e) {
