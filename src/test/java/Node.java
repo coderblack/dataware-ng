@@ -27,6 +27,7 @@ public class Node {
         return rightNode;
     }
 
+    // 添加注释
     public void setRightNode(Node rightNode) {
         this.rightNode = rightNode;
     }
