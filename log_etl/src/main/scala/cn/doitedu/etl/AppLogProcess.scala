@@ -9,11 +9,11 @@ import org.apache.spark.sql.types.{DataTypes, StructField, StructType}
 
 object AppLogProcess {
   def main(args: Array[String]): Unit = {
+    System.setProperty("HADOOP_USER_NAME","hdfs")
     Logger.getLogger("org").setLevel(Level.WARN)
     val session = SparkSession.builder()
       .appName(this.getClass.getSimpleName)
       .master("local")
-      .config("hive.metastore.warehouse.dir", "hdfs://h1:8020/user/hive/warehouse/")
       .enableHiveSupport()
       .getOrCreate()
 
@@ -42,7 +42,8 @@ object AppLogProcess {
         StructField("timeStamp", DataTypes.StringType)
       )
     )
-    val df = session.read.schema(schema).json("hdfs://h1:8020/user/hive/warehouse/ods.db/app_log_json/dt=2020-07-12")
+    val df = session.read.schema(schema).json("hdfs://cdh02:8020/user/hive/warehouse/ods.db/app_log_json/dt=2020-07-12")
+    df.show(10,false)
 
     // 取出今日的去重idmp映射数据
     val ids: DataFrame = df.select("deviceid","account").groupBy("deviceid","account").agg('deviceid,'account)
@@ -68,12 +69,15 @@ object AppLogProcess {
         |longitude   ,
         |netType     ,
         |osName      ,
-        |if(b.deviceid is null and b.account is null,1,0) as isnew
+        |if(b.deviceid is null and b.account is null,1,0) as isnew,
+        |'2020-07-12' as dt
         |from df a left join dim.idmp b
         |on a.deviceid = b.deviceid or a.account=b.account
+        |
         |""".stripMargin)
 
     ok.show(10,false)
+    //ok.write.partitionBy("dt").saveAsTable("dwd.app_log_dtl")
 
     // 合并两份idmp映射数据
     val newIdmp = session.sql(
@@ -89,15 +93,16 @@ object AppLogProcess {
         |
         |""".stripMargin)
     newIdmp.createTempView("newidmp")
+    newIdmp.show(10,false)
 
     // 保存新的idmp结果
-    session.sql(
+    /*session.sql(
       """
         |
         |insert into table dim.idmp partition(dt='2020-07-12')
         |select deviceid,account from newidmp
         |
-        |""".stripMargin)
+        |""".stripMargin)*/
 
     session.close()
   }
