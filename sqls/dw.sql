@@ -2,6 +2,10 @@ create table app_log(log string)
 partitioned by (dt string)
 ;
 
+create table dim.idmp(deviceid string,account string)
+partitioned by (dt string)
+stored as orc;
+
 drop table if exists app_log_json;
 create external table app_log_json (
 account        string,    
