@@ -46,12 +46,14 @@ use dim;
 drop table if exists  idmp;
 
 -- id映射维表
-create table idmp(deviceid string,account string)
+drop table if exists dim_idmp;
+create table dim_idmp(deviceid string,account string)
 partitioned by (dt string)
 stored as parquet
 ;
 
 -- geohash地理维表
+drop table  if exists  dim_geo;
 create table dim_geo(
 geo_hash string,
 province string,
@@ -59,7 +61,7 @@ city string,
 district string
 )
 stored as parquet;
-
+insert into table dim_geo values('','','','');
 
 
 -- dwd
@@ -93,7 +95,7 @@ day            string,
 timestr        string
 )
     partitioned by (dt string)
-    stored as orc
+    stored as parquet
 ;
 
 insert into table dwd_app_log partition(dt)
