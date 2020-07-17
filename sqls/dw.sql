@@ -40,46 +40,57 @@ load data local inpath '/root/logs/doit.mall.access.log.13' into table app_log_j
 load data local inpath '/root/logs/doit.mall.access.log.14' into table app_log_json partition(dt='2020-07-14');
 load data local inpath '/root/logs/doit.mall.access.log.15' into table app_log_json partition(dt='2020-07-15');
 
--- idmp维表
+-- idm层建库
 create database dim;
 use dim;
 drop table if exists  idmp;
+
+-- id映射维表
 create table idmp(deviceid string,account string)
 partitioned by (dt string)
 stored as parquet
 ;
+
+-- geohash地理维表
+create table dim_geo(
+geo_hash string,
+province string,
+city string,
+district string
+)
+stored as parquet;
 
 
 
 -- dwd
 drop table if exists dwd_app_log;
 create table dwd_app_log(
-                            account        string,
-                            isnew          int,
-                            appId          string,
-                            appVersion     string,
-                            carrier        string,
-                            deviceId       string,
-                            deviceType     string,
-                            eventId        string,
-                            eventInfo      map<string,string>,
-                            ip             string,
-                            latitude       string,
-                            longitude      string,
-                            netType        string,
-                            osName         string,
-                            osVersion      string,
-                            releaseChannel string,
-                            resolution     string,
-                            sessionId      string,
-                            province       string,
-                            city           string,
-                            district       string,
-                            ts             bigint,
-                            year           string,
-                            month          string,
-                            day            string,
-                            timestr        string
+account        string,
+isnew          int,
+appId          string,
+appVersion     string,
+carrier        string,
+deviceId       string,
+deviceType     string,
+eventId        string,
+eventInfo      map<string,string>,
+ip             string,
+latitude       string,
+longitude      string,
+netType        string,
+osName         string,
+osVersion      string,
+releaseChannel string,
+resolution     string,
+sessionId      string,
+province       string,
+city           string,
+district       string,
+ts             bigint,
+year           string,
+month          string,
+day            string,
+timestr        string
 )
     partitioned by (dt string)
     stored as orc
