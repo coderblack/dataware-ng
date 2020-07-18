@@ -66,7 +66,8 @@ insert into table dim_geo values('','','','');
 
 -- dwd
 drop table if exists app_log_dtl;
-create table app_log_dtl(
+create table app_log_dtl
+(
 account        string               ,
 isnew          int                  ,
 appId          string               ,
