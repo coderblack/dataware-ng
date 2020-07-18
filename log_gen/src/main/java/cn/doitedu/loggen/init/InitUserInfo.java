@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 初始化用户信息表
+ * user_info
+ * account,gender,province,city,birthday,phone,vip_level,email
+ */
 public class InitUserInfo {
     public static void main(String[] args) throws Exception {
 

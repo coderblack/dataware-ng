@@ -43,8 +43,11 @@ public class AccessorInfo {
         accessorInfo.appId = "cn.doitedu.app1";
         accessorInfo.appVersion = EventUtil.genAppVersions();
 
-        accessorInfo.longitude = EventUtil.genLongitude();
-        accessorInfo.latitude = EventUtil.genLatitude();
+        /*accessorInfo.longitude = EventUtil.genLongitude();
+        accessorInfo.latitude = EventUtil.genLatitude();*/
+        String[] gps = EventUtil.genGps().split(",");
+        accessorInfo.longitude = Double.parseDouble(gps[0]);
+        accessorInfo.latitude = Double.parseDouble(gps[1]);
 
         accessorInfo.ip = EventUtil.genIp();
 

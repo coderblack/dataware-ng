@@ -1,4 +1,4 @@
-package cn.doitedu.loggen.entry;
+package cn.doitedu.loggen.opertasks;
 
 import cn.doitedu.loggen.logbean.AppChannelLog;
 import cn.doitedu.loggen.pojo.*;
@@ -82,7 +82,13 @@ public class AccessorOperTask implements Runnable {
                     //LogSink.log(log,logContent);
                     // 输出到kafka
                     sinker.sink(logContent);
+
                     Thread.sleep(RandomUtils.nextLong(1000, 10000));
+                }
+
+                // 以一定几率将本次的访客实体，放回队列
+                if(RandomUtils.nextInt(1,100) > 30) {
+                    accessors.offer(appChannelLog);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

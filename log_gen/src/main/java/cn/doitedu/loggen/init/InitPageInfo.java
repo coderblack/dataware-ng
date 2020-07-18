@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * 页面信息维表生成
  * 页面id,频道id,栏目id,页面类别
  * pg01,pd01,ch01,ch_home
  */

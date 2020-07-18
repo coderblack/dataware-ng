@@ -1,6 +1,8 @@
 package cn.doitedu.loggen.entry;
 
 import cn.doitedu.loggen.logbean.AppChannelLog;
+import cn.doitedu.loggen.opertasks.AccessorOperTask;
+import cn.doitedu.loggen.opertasks.AddAccessorTask;
 import cn.doitedu.loggen.utils.DataHolder;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -15,6 +17,7 @@ public class GenAppLog {
         DataHolder.loadEventIds();
         DataHolder.loadReleaseChannel();
         DataHolder.loadAccounts();
+        DataHolder.loadGps();
 
         // 初始化在线访客队列
         int maxOnline = 100;

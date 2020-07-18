@@ -17,6 +17,7 @@ public class DataHolder {
     public static List<String> devices = null;
     public static List<String> channels = null;
     public static List<String> eventIds = null;
+    public static List<String> gpsLst = null;
     public static String[] refTypes = {"1","2","3","4","5"}; // 商品浏览来源： 搜索，运营位，买了又买，看了又看，猜你喜欢
 
     public static String[] appVersions = {"2.0","2.2","3.0","3.2","3.4","4.0"};
@@ -36,6 +37,23 @@ public class DataHolder {
         return accountLst;
 
     }
+
+    public static List<String> loadGps() throws  Exception{
+        if(gpsLst !=null) return gpsLst;
+        gpsLst = new ArrayList<>();
+        Connection conn = DbUtil.getConn();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select BD09_LNG,BD09_LAT from t_md_areas");
+        while(rs.next()){
+            double lng = rs.getDouble(1);
+            double lat = rs.getDouble(2);
+            gpsLst.add(lng+","+lat);
+        }
+        stmt.close();
+        conn.close();
+        return gpsLst;
+    }
+
 
     public static List<String> loadDevices() throws IOException {
         if(devices != null) return devices;

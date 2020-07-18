@@ -76,6 +76,13 @@ public class EventUtil {
         return RandomUtils.nextDouble(20.00,70.00);
     }
 
+    public static String genGps() throws Exception {
+        List<String> gpsLst = DataHolder.loadGps();
+        String gps = gpsLst.get(RandomUtils.nextInt(0, gpsLst.size()));
+        return gps;
+    }
+
+
     public static String genNetType() {
         String[] netTypes = {"3G","4G","5G","WIFI"};
         return netTypes[RandomUtils.nextInt(0,netTypes.length)];

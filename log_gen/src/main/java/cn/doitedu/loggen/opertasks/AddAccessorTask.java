@@ -1,4 +1,4 @@
-package cn.doitedu.loggen.entry;
+package cn.doitedu.loggen.opertasks;
 
 import cn.doitedu.loggen.logbean.AppChannelLog;
 import cn.doitedu.loggen.pojo.AccessorInfo;
