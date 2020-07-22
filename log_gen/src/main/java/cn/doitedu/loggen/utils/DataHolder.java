@@ -63,7 +63,7 @@ public class DataHolder {
 
 
     public static List<String> loadReleaseChannel() throws IOException {
-        if(channels != null) return accountLst;
+        if(channels != null) return channels;
         channels = FileUtils.readLines(new File("initdata/releasechannel.txt"), "utf-8");
         return channels;
     }
