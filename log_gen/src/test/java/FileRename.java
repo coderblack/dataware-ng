@@ -5,16 +5,28 @@ import java.io.File;
 public class FileRename {
     public static void main(String[] args) {
 
-        String dir = "E:\\BaiduNetdiskDownload\\【友凡22085】基于Flink+ClickHouse构建亿级电商实时数据分析平台（PC、移动、小程序）\\";
-        File file = new File(dir);
-        File[] files = file.listFiles();
-        for (File f : files) {
-            String name = f.getName();
-            String[] split = name.split("、");
-            if(split.length==2){
-                String pre = StringUtils.leftPad(split[0],3,"0");
-                f.renameTo(new File(dir+pre+"、"+split[1]));
-            }
-        }
+
+        String c = "abc";
+        StringBuilder ss = new StringBuilder(c);
+        String s = ss.toString();
+        String s1 = s.intern();
+        System.out.println(s == s1);
+        System.out.println(s == c);
+
+        String x = "aa";
+        String x1 = x.intern();
+        System.out.println(x==x1);
+
+        String p1 = new String("11");
+        String p2 = new String("11");
+        System.out.println(p1==p2);
+        System.out.println(p1.equals(p2));
+        System.out.println(p1.intern() == p2.intern());
+
+        String o1 = new String(new char[]{'a', 'b'});
+        System.out.println(o1.intern() == o1);
+
+        String g1 = new String("ab");
+        System.out.println(g1.intern() == g1);
     }
 }
