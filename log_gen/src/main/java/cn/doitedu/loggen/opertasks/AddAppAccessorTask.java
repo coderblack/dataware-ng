@@ -7,10 +7,10 @@ import org.apache.commons.lang3.RandomUtils;
 
 import java.util.concurrent.BlockingQueue;
 
-public class AddAccessorTask implements Runnable {
+public class AddAppAccessorTask implements Runnable {
     BlockingQueue<AppChannelLog> accessors;
 
-    public AddAccessorTask(BlockingQueue<AppChannelLog> accessors) {
+    public AddAppAccessorTask(BlockingQueue<AppChannelLog> accessors) {
         this.accessors = accessors;
     }
 

@@ -1,5 +1,7 @@
 package cn.doitedu.loggen.logbean;
 
+import cn.doitedu.loggen.pojo.Event;
+
 import java.util.HashMap;
 
 /**
@@ -8,7 +10,7 @@ import java.util.HashMap;
 public class WeixinAppChannelLog {
     private long timeStamp;
     private String sessionId;
-    private String wxid;  // 微信id
+    private String openid;  // 微信id
     private String account; // 账号
 
     private String deviceId;
@@ -16,11 +18,7 @@ public class WeixinAppChannelLog {
     private String resolution;
     private String osName;
     private String osVersion;
-/*
-    private String appId;
-    private String appVersion;
-    private String releaseChannel;
-*/
+
     private double latitude;
     private double longitude;
     private String ip;
@@ -29,7 +27,28 @@ public class WeixinAppChannelLog {
     private String carrier;
 
     private String eventId;
-    private HashMap<String,String> eventInfo;
+    private Event properties;
+
+    public void set(long timeStamp, String sessionId, String openid,String account, String deviceId, String deviceType, String resolution, String osName, String osVersion, double latitude, double longitude, String ip, String netType, String carrier, String eventId, Event eventInfo) {
+        this.timeStamp = timeStamp;
+        this.sessionId = sessionId;
+        this.account = account;
+        this.account = openid;
+        this.deviceId = deviceId;
+        this.deviceType = deviceType;
+        this.resolution = resolution;
+        this.osName = osName;
+        this.osVersion = osVersion;
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.ip = ip;
+        this.netType = netType;
+        this.carrier = carrier;
+        this.eventId = eventId;
+        this.properties = eventInfo;
+    }
+
 
     public long getTimeStamp() {
         return timeStamp;
@@ -47,12 +66,12 @@ public class WeixinAppChannelLog {
         this.sessionId = sessionId;
     }
 
-    public String getWxid() {
-        return wxid;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setWxid(String wxid) {
-        this.wxid = wxid;
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
     public String getAccount() {
@@ -151,11 +170,11 @@ public class WeixinAppChannelLog {
         this.eventId = eventId;
     }
 
-    public HashMap<String, String> getEventInfo() {
-        return eventInfo;
+    public Event getProperties() {
+        return properties;
     }
 
-    public void setEventInfo(HashMap<String, String> eventInfo) {
-        this.eventInfo = eventInfo;
+    public void setProperties(Event properties) {
+        this.properties = properties;
     }
 }

@@ -1,16 +1,21 @@
 package cn.doitedu.loggen.utils;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DbUtil {
 
-    public static final String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/realtimedw?useUnicode=true&characterEncoding=utf8&useSSL=false";
-    public static final String jdbcUser = "root";
-    public static final String jdbcPwd = "root";
+    public static String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/realtimedw?useUnicode=true&characterEncoding=utf8&useSSL=false";
+    public static String jdbcUser = "root";
+    public static String jdbcPwd = "root";
 
-    public static Connection getConn(){
+    public static Connection getConn() throws IOException {
+        jdbcUrl = ConfHolder.getProperty("db.url");
+        jdbcUser = ConfHolder.getProperty("db.user");
+        jdbcPwd = ConfHolder.getProperty("db.password");
+
         Connection conn = null;
         Statement stmt = null;
         try {

@@ -116,8 +116,12 @@ public class EventUtil {
         return RandomStringUtils.randomAlphabetic(2,5)+" " +RandomStringUtils.randomAlphabetic(2,5);
     }
 
-    public static String genAccount() throws SQLException {
+    public static String genAccount() throws Exception {
         List<String> accounts = DataHolder.loadAccounts();
         return accounts.get(RandomUtils.nextInt(0,accounts.size()));
+    }
+
+    public static String getOpenId() {
+        return RandomStringUtils.randomAlphabetic(8);
     }
 }

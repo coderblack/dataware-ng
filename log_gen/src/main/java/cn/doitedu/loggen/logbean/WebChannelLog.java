@@ -32,7 +32,7 @@ public class WebChannelLog {
     private String carrier;   // pc端无，移动设备有
 
     private String eventId;
-    private HashMap<String,String> eventInfo;
+    private HashMap<String,String> properties;
 
     public long getTimeStamp() {
         return timeStamp;
@@ -138,11 +138,11 @@ public class WebChannelLog {
         this.eventId = eventId;
     }
 
-    public HashMap<String, String> getEventInfo() {
-        return eventInfo;
+    public HashMap<String, String> getProperties() {
+        return properties;
     }
 
-    public void setEventInfo(HashMap<String, String> eventInfo) {
-        this.eventInfo = eventInfo;
+    public void setProperties(HashMap<String, String> properties) {
+        this.properties = properties;
     }
 }

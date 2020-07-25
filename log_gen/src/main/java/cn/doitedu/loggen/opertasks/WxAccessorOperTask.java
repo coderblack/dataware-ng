@@ -1,6 +1,7 @@
 package cn.doitedu.loggen.opertasks;
 
 import cn.doitedu.loggen.logbean.AppChannelLog;
+import cn.doitedu.loggen.logbean.WeixinAppChannelLog;
 import cn.doitedu.loggen.pojo.*;
 import cn.doitedu.loggen.sink.KafkaSink;
 import cn.doitedu.loggen.sink.LogSink;
@@ -14,11 +15,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
-public class AccessorOperTask implements Runnable {
-    BlockingQueue<AppChannelLog> accessors;
+public class WxAccessorOperTask implements Runnable {
+    BlockingQueue<WeixinAppChannelLog> accessors;
     Sinker sinker;
 
-    public AccessorOperTask(BlockingQueue<AppChannelLog> accessors) throws IOException {
+    public WxAccessorOperTask(BlockingQueue<WeixinAppChannelLog> accessors) throws IOException {
         this.accessors = accessors;
         String sinkType = ConfHolder.getProperty("sink.type");
         if("logger".equals(sinkType)){
@@ -37,8 +38,8 @@ public class AccessorOperTask implements Runnable {
 
         while (true) {
             try {
-                AppChannelLog appChannelLog = accessors.take();
-                appChannelLog.setSessionId(EventUtil.genSessionId());
+                WeixinAppChannelLog wxAppChannelLog = accessors.take();
+                wxAppChannelLog.setSessionId(EventUtil.genSessionId());
                 int events = RandomUtils.nextInt(1, 60);
                 for (int j = 0; j < events; j++) {
                     long timeStamp = System.currentTimeMillis();
@@ -69,15 +70,15 @@ public class AccessorOperTask implements Runnable {
                         event = EventShare.get();
                     }
 
-                    if (StringUtils.isBlank(appChannelLog.getAccount()) && event.needAccount) {
-                        appChannelLog.setAccount(EventUtil.genAccount());
+                    if (StringUtils.isBlank(wxAppChannelLog.getAccount()) && event.needAccount) {
+                        wxAppChannelLog.setAccount(EventUtil.genAccount());
                     }
 
-                    appChannelLog.setTimeStamp(System.currentTimeMillis());
-                    appChannelLog.setEventId(eventId);
-                    appChannelLog.setProperties(event);
+                    wxAppChannelLog.setTimeStamp(System.currentTimeMillis());
+                    wxAppChannelLog.setEventId(eventId);
+                    wxAppChannelLog.setProperties(event);
 
-                    String logContent = JSON.toJSONString(appChannelLog);
+                    String logContent = JSON.toJSONString(wxAppChannelLog);
                     // 输出日志
                     sinker.sink(logContent);
 
@@ -86,7 +87,7 @@ public class AccessorOperTask implements Runnable {
 
                 // 以一定几率将本次的访客实体，放回队列
                 if(RandomUtils.nextInt(1,100) > 30) {
-                    accessors.offer(appChannelLog);
+                    accessors.offer(wxAppChannelLog);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

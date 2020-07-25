@@ -22,7 +22,7 @@ public class DataHolder {
 
     public static String[] appVersions = {"2.0","2.2","3.0","3.2","3.4","4.0"};
 
-    public static List<String> loadAccounts() throws SQLException {
+    public static List<String> loadAccounts() throws Exception {
 
         if(accountLst != null) return accountLst;
         accountLst = new ArrayList<>();
@@ -57,20 +57,23 @@ public class DataHolder {
 
     public static List<String> loadDevices() throws IOException {
         if(devices != null) return devices;
-        devices = FileUtils.readLines(new File("initdata/phoneinfo.txt"), "utf-8");
+        String path = ConfHolder.getProperty("initdata.phoneinfo");
+        devices = FileUtils.readLines(new File(path), "utf-8");
         return devices;
     }
 
 
     public static List<String> loadReleaseChannel() throws IOException {
         if(channels != null) return channels;
-        channels = FileUtils.readLines(new File("initdata/releasechannel.txt"), "utf-8");
+        String path = ConfHolder.getProperty("initdata.releasechannel");
+        channels = FileUtils.readLines(new File(path), "utf-8");
         return channels;
     }
 
     public static List<String> loadEventIds() throws IOException {
         if(eventIds != null) return eventIds;
-        eventIds = FileUtils.readLines(new File("initdata/eventIds.txt"), "utf-8");
+        String path = ConfHolder.getProperty("initdata.eventIds");
+        eventIds = FileUtils.readLines(new File(path), "utf-8");
         return eventIds;
     }
 }

@@ -26,7 +26,7 @@ public class AppChannelLog {
     private String carrier;
 
     private String eventId;
-    private Event eventInfo;
+    private Event properties;
 
     public void set(long timeStamp, String sessionId, String account, String deviceId, String deviceType, String resolution, String osName, String osVersion, String appId, String appVersion, String releaseChannel, double latitude, double longitude, String ip, String netType, String carrier, String eventId, Event eventInfo) {
         this.timeStamp = timeStamp;
@@ -46,7 +46,7 @@ public class AppChannelLog {
         this.netType = netType;
         this.carrier = carrier;
         this.eventId = eventId;
-        this.eventInfo = eventInfo;
+        this.properties = eventInfo;
     }
 
     public long getTimeStamp() {
@@ -185,11 +185,11 @@ public class AppChannelLog {
         this.eventId = eventId;
     }
 
-    public Event getEventInfo() {
-        return eventInfo;
+    public Event getProperties() {
+        return properties;
     }
 
-    public void setEventInfo(Event eventInfo) {
-        this.eventInfo = eventInfo;
+    public void setProperties(Event properties) {
+        this.properties = properties;
     }
 }
