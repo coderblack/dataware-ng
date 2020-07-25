@@ -139,7 +139,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cn.doitedu.hebust.pre.AppEventLogPreprocess</mainClass>
+                            <mainClass>cn.doitedu.loggen.entry.GenAppLog</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
