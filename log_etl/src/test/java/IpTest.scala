@@ -6,11 +6,13 @@ import util.SparkUtil
 object IpTest {
   def main(args: Array[String]): Unit = {
 
-    /*val config = new DbConfig
+    // 初始化配置参数
+    val config = new DbConfig
+    // 构造搜索器,dbFile是ip地址库字典文件所在路径
     val searcher = new DbSearcher(config, "initdata/ip2region.db")
-
+    // 使用搜索器,调用查找算法获取地理位置信息
     val block = searcher.memorySearch("39.99.177.94")
-    println(block)*/
+    println(block)
 
 
    /*val rf = new RandomAccessFile("initdata/ip2region.db", "r")
@@ -24,6 +26,7 @@ object IpTest {
     println(block2)*/
 
 
+/*
 
     val spark = SparkUtil.getSpark()
     val rf = new RandomAccessFile("initdata/ip2region.db", "r")
@@ -43,7 +46,10 @@ object IpTest {
 
     res.foreach(println)
 
+
     spark.close()
+    */
+
   }
 
 }
