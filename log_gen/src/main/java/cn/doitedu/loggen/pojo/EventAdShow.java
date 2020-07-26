@@ -1,8 +1,10 @@
 package cn.doitedu.loggen.pojo;
 
 import cn.doitedu.loggen.utils.EventUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class EventAdShow extends Event{
+    @JSONField(serialize = false,deserialize = false)
     public boolean needAccount = false;
 
     private String pageId;

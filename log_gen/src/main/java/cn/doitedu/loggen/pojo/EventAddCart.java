@@ -1,6 +1,7 @@
 package cn.doitedu.loggen.pojo;
 
 import cn.doitedu.loggen.utils.EventUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.apache.commons.lang3.RandomUtils;
 
 /***
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.RandomUtils;
  * @date 2020/7/5
  **/
 public class EventAddCart extends Event{
+    @JSONField(serialize = false,deserialize = false)
     public boolean needAccount = true;
     String refType;
     String productId;

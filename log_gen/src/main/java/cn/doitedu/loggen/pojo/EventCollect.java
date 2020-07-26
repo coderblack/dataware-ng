@@ -1,6 +1,7 @@
 package cn.doitedu.loggen.pojo;
 
 import cn.doitedu.loggen.utils.EventUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 
 /***
  * @author hunter.d
@@ -9,6 +10,7 @@ import cn.doitedu.loggen.utils.EventUtil;
  * @date 2020/7/5
  **/
 public class EventCollect  extends Event{
+    @JSONField(serialize = false,deserialize = false)
     public boolean needAccount = true;
     String productId;
     String pageId;

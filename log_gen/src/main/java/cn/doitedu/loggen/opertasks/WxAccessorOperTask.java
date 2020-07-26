@@ -1,7 +1,6 @@
 package cn.doitedu.loggen.opertasks;
 
-import cn.doitedu.loggen.logbean.AppChannelLog;
-import cn.doitedu.loggen.logbean.WeixinAppChannelLog;
+import cn.doitedu.loggen.logbean.WeixinAppAccessorInfo;
 import cn.doitedu.loggen.pojo.*;
 import cn.doitedu.loggen.sink.KafkaSink;
 import cn.doitedu.loggen.sink.LogSink;
@@ -16,10 +15,10 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
 public class WxAccessorOperTask implements Runnable {
-    BlockingQueue<WeixinAppChannelLog> accessors;
+    BlockingQueue<WeixinAppAccessorInfo> accessors;
     Sinker sinker;
 
-    public WxAccessorOperTask(BlockingQueue<WeixinAppChannelLog> accessors) throws IOException {
+    public WxAccessorOperTask(BlockingQueue<WeixinAppAccessorInfo> accessors) throws IOException {
         this.accessors = accessors;
         String sinkType = ConfHolder.getProperty("sink.type");
         if("logger".equals(sinkType)){
@@ -38,7 +37,7 @@ public class WxAccessorOperTask implements Runnable {
 
         while (true) {
             try {
-                WeixinAppChannelLog wxAppChannelLog = accessors.take();
+                WeixinAppAccessorInfo wxAppChannelLog = accessors.take();
                 wxAppChannelLog.setSessionId(EventUtil.genSessionId());
                 int events = RandomUtils.nextInt(1, 60);
                 for (int j = 0; j < events; j++) {

@@ -1,8 +1,10 @@
 package cn.doitedu.loggen.pojo;
 
 import cn.doitedu.loggen.utils.EventUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class EventSubmitOrder extends Event{
+    @JSONField(serialize = false,deserialize = false)
     public boolean needAccount = true;
     String refType; // 订单来源：搜索购，运营位购，推荐购，
 

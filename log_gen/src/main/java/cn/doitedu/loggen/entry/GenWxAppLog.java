@@ -1,9 +1,6 @@
 package cn.doitedu.loggen.entry;
 
-import cn.doitedu.loggen.logbean.AppChannelLog;
-import cn.doitedu.loggen.logbean.WeixinAppChannelLog;
-import cn.doitedu.loggen.opertasks.AccessorOperTask;
-import cn.doitedu.loggen.opertasks.AddAppAccessorTask;
+import cn.doitedu.loggen.logbean.WeixinAppAccessorInfo;
 import cn.doitedu.loggen.opertasks.AddWxAccessorTask;
 import cn.doitedu.loggen.opertasks.WxAccessorOperTask;
 import cn.doitedu.loggen.utils.DataHolder;
@@ -24,7 +21,7 @@ public class GenWxAppLog {
 
         // 初始化在线访客队列
         int maxOnline = 100;
-        BlockingQueue<WeixinAppChannelLog> accessors = new ArrayBlockingQueue<WeixinAppChannelLog>(1000);
+        BlockingQueue<WeixinAppAccessorInfo> accessors = new ArrayBlockingQueue<WeixinAppAccessorInfo>(1000);
 
         // 启动添加访客的线程
         new Thread(new AddWxAccessorTask(accessors)).start();
