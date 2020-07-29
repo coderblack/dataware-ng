@@ -67,10 +67,24 @@ public class WxAccessorOperTask implements Runnable {
                         event = EventThumbup.get();
                     } else if (eventId.equals("share")) {
                         event = EventShare.get();
+                    } else if(eventId.equals("login")){
+                        event = EventLogin.get();
                     }
 
                     if (StringUtils.isBlank(wxAppChannelLog.getAccount()) && event.needAccount) {
-                        wxAppChannelLog.setAccount(EventUtil.genAccount());
+                        // 发起一个登陆事件
+                        EventLogin eventLogin = EventLogin.get();
+                        // 拼装登录日志
+                        wxAppChannelLog.setTimeStamp(System.currentTimeMillis());
+                        wxAppChannelLog.setEventId("login");
+                        wxAppChannelLog.setProperties(eventLogin);
+
+                        wxAppChannelLog.setAccount(eventLogin.getAccount());
+
+                        String logContent = JSON.toJSONString(wxAppChannelLog);
+                        // 输出登录日志
+                        sinker.sink(logContent);
+                        Thread.sleep(RandomUtils.nextLong(500, 1500));
                     }
 
                     wxAppChannelLog.setTimeStamp(System.currentTimeMillis());
