@@ -67,10 +67,25 @@ public class AppAccessorOperTask implements Runnable {
                         event = EventThumbup.get();
                     } else if (eventId.equals("share")) {
                         event = EventShare.get();
+                    } else if (eventId.equals("login")){
+                        event = EventLogin.get();
                     }
 
                     if (StringUtils.isBlank(appAccessorInfo.getAccount()) && event.needAccount) {
-                        appAccessorInfo.setAccount(EventUtil.genAccount());
+                        // 发起一个登陆事件
+                        EventLogin eventLogin = EventLogin.get();
+                        // 输出登陆时间日志
+                        appAccessorInfo.setTimeStamp(System.currentTimeMillis());
+                        appAccessorInfo.setEventId("login");
+                        appAccessorInfo.setProperties(eventLogin);
+
+                        appAccessorInfo.setAccount(eventLogin.getAccount());
+
+                        String logContent = JSON.toJSONString(appAccessorInfo);
+                        // 输出日志
+                        sinker.sink(logContent);
+                        Thread.sleep(RandomUtils.nextLong(500, 1500));
+
                     }
 
                     appAccessorInfo.setTimeStamp(System.currentTimeMillis());
