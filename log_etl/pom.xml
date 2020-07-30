@@ -46,6 +46,12 @@
             <artifactId>ip2region</artifactId>
             <version>1.7.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openx.data</groupId>
+            <artifactId>json-serde</artifactId>
+            <version>1.3.8</version>
+        </dependency>
     </dependencies>
 
 
