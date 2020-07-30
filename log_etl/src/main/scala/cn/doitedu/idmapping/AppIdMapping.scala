@@ -1,14 +1,9 @@
 package cn.doitedu.idmapping
 
-import java.util
-
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{DataTypes, StructType}
-
-import scala.collection.{immutable, mutable}
-import scala.collection.mutable.ListBuffer
 
 object AppIdMapping {
 
