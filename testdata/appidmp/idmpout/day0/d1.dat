@@ -1,0 +1,6 @@
+{"deviceid":"d0","lst":[{"account":"u0","timestamp":7,"score":100},{"account":"u1","timestamp":8,"score":20}],"guid":"u0"}
+{"deviceid":"d1","lst":[{"account":"u1","timestamp":9,"score":100}],"guid":"u1"}
+{"deviceid":"d2","lst":[{"account":"u2","timestamp":8,"score":100}],"guid":"u2"}
+{"deviceid":"d3","lst":[{"account":"u2","timestamp":9,"score":90}],"guid":"u2"}
+{"deviceid":"d4","lst":[],"guid":"d4"}
+{"deviceid":"d5","lst":[],"guid":"d5"}
