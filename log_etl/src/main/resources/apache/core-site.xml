@@ -26,7 +26,7 @@
 
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://h1:8020/</value>
+<value>hdfs://doitedu01:8020/</value>
 </property>
 
 <property>
