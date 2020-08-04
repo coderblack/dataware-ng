@@ -30,3 +30,107 @@ d,e6,p1:6,2
 d,e4,p5:7,3
 d,e4,p5:7,4
 d,e1,p1:2,5
+
+-- 漏斗模型：e1{p1:2},e3{p4:5},e4{p5:7}
+select
+*
+from loudou
+where (eid='e1' and prop['p1']='2') or (eid='e3' and prop['p4']='5') or (eid='e4' and prop['p5']='7')
+
++-------------+-------------+--------------+------------+
+| loudou.uid  | loudou.eid  | loudou.prop  | loudou.ts  |
++-------------+-------------+--------------+------------+
+| a           | e1          | {"p1":"2"}   | 1          |
+| a           | e3          | {"p4":"5"}   | 3          |
+| b           | e4          | {"p5":"7"}   | 4          |
+| c           | e1          | {"p1":"2"}   | 2          |
+| c           | e3          | {"p4":"5"}   | 3          |
+| c           | e4          | {"p5":"7"}   | 6          |
+| d           | e3          | {"p4":"5"}   | 1          |
+| d           | e4          | {"p5":"7"}   | 3          |
+| d           | e4          | {"p5":"7"}   | 4          |
+| d           | e1          | {"p1":"2"}   | 5          |
++-------------+-------------+--------------+------------+
+with tmp as (
+    select *
+    from loudou
+    where (eid = 'e1' and prop['p1'] = '2')
+       or (eid = 'e3' and prop['p4'] = '5')
+       or (eid = 'e4' and prop['p5'] = '7')
+)
+select uid,
+       eid,
+       ts
+from (
+         select uid,
+                eid,
+                ts,
+                row_number() over (partition by uid,eid order by ts) as rn
+         from tmp
+     ) o
+
+where rn = 1
+    sort by uid
+    , ts
+
++------+------+-----+
+| uid  | eid  | ts  |
++------+------+-----+
+| a    | e1   | 1   |
+| a    | e3   | 3   |
+| b    | e4   | 4   |
+| c    | e1   | 2   |
+| c    | e3   | 3   |
+| c    | e4   | 6   |
+| d    | e3   | 1   |
+| d    | e4   | 3   |
+| d    | e1   | 5   |
++------+------+-----+
+
+with tmp as (
+    select *
+    from loudou
+    where (eid = 'e1' and prop['p1'] = '2')
+       or (eid = 'e3' and prop['p4'] = '5')
+       or (eid = 'e4' and prop['p5'] = '7')
+)
+
+select o3.uid,
+       o3.eid,
+       o3.ts,
+       o3.step
+from (
+         select uid,
+                eid,
+                ts,
+                row_number() over (partition by uid order by ts) as step
+         from (
+                  select uid,
+                         eid,
+                         ts
+                  from (
+                           select uid,
+                                  eid,
+                                  ts,
+                                  row_number() over (partition by uid,eid order by ts) as rn
+                           from tmp
+                       ) o1
+                  where rn = 1
+              ) o2
+     ) o3
+         join
+     (
+         select 'e1' as eid, 1 as step
+         union all
+         select 'e3' as eid, 2 as step
+         union all
+         select 'e4' as eid, 3 as step
+     ) ld
+     on o3.eid = ld.eid and o3.step = ld.step
+;
+
+
+
+
+
+
