@@ -1,0 +1,32 @@
+create table loudou(
+uid string,
+eid string,
+prop map<string,string>,
+ts int
+)
+row format delimited fields terminated by ','
+collection items terminated by '\t'
+map keys terminated by ':'
+;
+
+load data local inpath '/root/loudou.txt' into table loudou;
+
+a,e1,p1:2,1
+a,e3,p4:5,3
+a,e4,p1:6,4
+a,e5,p1:6,5
+b,e1,p1:6,1
+b,e3,p1:6,3
+b,e4,p5:7,4
+b,e5,p1:6,5
+c,e2,p1:6,1
+c,e1,p1:2,2
+c,e3,p4:5,3
+c,e5,p1:6,4
+c,e5,p2:6,5
+c,e4,p5:7,6
+d,e3,p4:5,1
+d,e6,p1:6,2
+d,e4,p5:7,3
+d,e4,p5:7,4
+d,e1,p1:2,5
